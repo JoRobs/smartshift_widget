@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.shiftwidget">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application android:label="Shift App">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <!-- The widget provider -->
+        <receiver android:name=".ShiftWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <!-- This specifies the widget provider info -->
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widgetinfo" />
+        </receiver> <!-- The service serving the RemoteViews to the collection widget -->
+        <service
+            android:name=".ShiftWidgetService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" /> <!-- The content provider serving the (fake) weather data -->
+        <provider
+            android:name=".ShiftDataProvider"
+            android:authorities="com.example.android.shiftwidget.provider"
+            android:exported="true" />
+    </application>
+
+</manifest>
